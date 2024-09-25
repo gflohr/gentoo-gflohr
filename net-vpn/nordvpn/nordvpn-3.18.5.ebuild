@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit unpacker
+inherit go-module
 
 DESCRIPTION="The Linux client for NordVPN"
 HOMEPAGE="https://nordvpn.com/"
@@ -30,9 +30,7 @@ RDEPEND="
 	sys-libs/zlib
 "
 
-src_unpack() {
-	:
-}
+S="${WORKDIR}/nordvpn-linux-${PV}"
 
 src_configure() {
 	# This is what the Debian binary uses.
@@ -63,6 +61,10 @@ src_configure() {
 }
 
 src_compile() {
+	export GODEBUG="netdns=go"  # Use Go's DNS resolver instead of the system resolver
+	export GOPROXY=https://proxy.golang.org,direct
+	export GOSUMDB=off  # Disable checksum database for simplicity
+
 	ego build -ldflags="-buildmode=pie -s -w -linkmode=external \
 		-X main.Version=${NORDVPN_VERSION} \
 		-X main.Environment=${NORDVPN_ENVIRONMENT} \
