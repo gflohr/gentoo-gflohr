@@ -17,6 +17,8 @@ KEYWORDS="-* ~x86 amd64"
 IUSE="zsh-completion"
 
 RESTRICT="bindist mirror"
+QA_PRESTRIPPED="*/usr/bin/nordvpn */usr/sbin/nordvpnd */usr/lib/*"
+
 
 BDEPEND=""
 
