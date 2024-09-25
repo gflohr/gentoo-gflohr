@@ -42,5 +42,11 @@ src_install() {
 	unpacker
 
 	rm -f _gpgorigin || die
+
+	mv usr/share/doc/${PN} usr/share/doc/${PF} || die
+
+	gzip -d usr/share/doc/${PF}/changelog.Debian.gz || die
+	gzip -d usr/share/man/man1/${PN}.1.gz || die
+
 }
 
