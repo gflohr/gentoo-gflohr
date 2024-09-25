@@ -9,6 +9,8 @@ DESCRIPTION="The Linux client for NordVPN"
 HOMEPAGE="https://nordvpn.com/"
 SRC_URI="https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/${PN}_${PV}_amd64.deb"
 
+S="${WORKDIR}"
+
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="-* ~x86 amd64"
