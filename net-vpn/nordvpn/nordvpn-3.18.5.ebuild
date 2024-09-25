@@ -1,9 +1,9 @@
 # Copyright 2024 Guido Flohr <guido.flohr@cantanea.com>
-# Distributed under the terms of the GNU General Public License v2
+# Distributed under the terms of the WTFPL.
 
 EAPI=8
 
-inherit unpacker
+inherit unpacker tmpfiles xdg-utils
 
 DESCRIPTION="The Linux client for NordVPN"
 HOMEPAGE="https://nordvpn.com/"
@@ -17,10 +17,15 @@ KEYWORDS="-* ~x86 amd64"
 IUSE="zsh-completion"
 
 RESTRICT="bindist mirror"
-QA_PRESTRIPPED="*/usr/bin/nordvpn */usr/sbin/nordvpnd */usr/lib/*"
+QA_PRESTRIPPED="
+	/usr/bin/nordvpn
+	/usr/sbin/nordvpnd
+	/usr/lib/nordvpn/nordfileshare
+	/usr/lib/nordvpn/norduserd
+	/usr/lib/nordvpn/openvpn
+"
 
-
-BDEPEND=""
+DEPEND="acct-group/nordvpn"
 
 RDEPEND="
 	net-firewall/iptables
@@ -31,6 +36,10 @@ RDEPEND="
 	net-dns/libidn2
 	sys-libs/zlib
 "
+
+pkg_preinst() {
+	xdg_pkg_preinst
+}
 
 src_unpack() {
 	:
@@ -47,6 +56,14 @@ src_install() {
 
 	gzip -d usr/share/doc/${PF}/changelog.Debian.gz || die
 	gzip -d usr/share/man/man1/${PN}.1.gz || die
+}
 
+pkg_postinst() {
+	xdg_pkg_postinst
+	tmpfiles_process nordvpn.conf
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
 }
 
