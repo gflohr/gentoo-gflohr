@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>guido.flohr@cantanea.com</email>
+		<name>Guido Flohr</name>
+	</maintainer>
+	<longdescription>
+		The best online VPN service for speed and security
+		NordVPN protects your privacy online and
+		lets access media content without regional restrictions.
+		Strong encryption and no-log policy
+		with 5000+ servers in 60+ countries.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://nordvpn.com/contact-us/</bugs-to>
+	</upstream>
+</pkgmetadata>
