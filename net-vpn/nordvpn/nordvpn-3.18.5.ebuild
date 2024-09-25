@@ -9,6 +9,7 @@ DESCRIPTION="The Linux client for NordVPN"
 HOMEPAGE="https://nordvpn.com/"
 SRC_URI="
 	https://github.com/NordSecurity/${PN}-linux/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/gflohr/gentoo-gflohr-nordvpn-dependencies/releases/download/v${PV}/${PN}-deps.tar.xz
 "
 
 LICENSE="GPL-3"
@@ -61,23 +62,21 @@ src_configure() {
 }
 
 src_compile() {
-	export GODEBUG="netdns=go"  # Use Go's DNS resolver instead of the system resolver
-	export GOPROXY=https://proxy.golang.org,direct
-	export GOSUMDB=off  # Disable checksum database for simplicity
-
-	ego build -ldflags="-buildmode=pie -s -w -linkmode=external \
+	ego build -buildmode=pie \
+		-ldflags="-s -w -linkmode=external \
 		-X main.Version=${NORDVPN_VERSION} \
 		-X main.Environment=${NORDVPN_ENVIRONMENT} \
 		-X main.Hash=${NORDVPN_HASH} \
 		-X main.Salt=${NORDVPN_SALT} \
 		" -o bin/nordvpn ./cmd/cli
-	ego build -ldflags="-buildmode=pie -s -w -linkmode=external \
-		-tags=drop,moose,telio \
+
+	ego build -buildmode=pie -tags=drop,moose,telio \
+		-ldflags="-s -w -linkmode=external \
 		-X main.Version=${NORDVPN_VERSION} \
 		-X main.Environment=${NORDVPN_ENVIRONMENT} \
 		-X main.Arch=${NORDVPN_ARCH} \
 		-X main.Salt=${NORDVPN_SALT} \
-		-X main.PackageType=${NORDVPN_PACKAGE_TYPE}
+		-X main.PackageType=${NORDVPN_PACKAGE_TYPE} \
 		" -o bin/nordvpnd ./cmd/daemon
 }
 
