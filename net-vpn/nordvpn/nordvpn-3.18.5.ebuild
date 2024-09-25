@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit unpacker tmpfiles xdg-utils
+inherit unpacker tmpfiles xdg
 
 DESCRIPTION="The Linux client for NordVPN"
 HOMEPAGE="https://nordvpn.com/"
