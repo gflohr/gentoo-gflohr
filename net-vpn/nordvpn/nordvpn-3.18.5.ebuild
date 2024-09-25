@@ -14,6 +14,8 @@ SLOT="0"
 KEYWORDS="-* ~x86 amd64"
 IUSE="zsh-completion"
 
+RESTRICT="bindist mirror"
+
 BDEPEND=""
 
 RDEPEND="
